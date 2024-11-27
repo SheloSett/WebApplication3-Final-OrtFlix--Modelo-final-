@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using WebApplication3_Final_OrtFlix__Modelo_final_.Context;
+
 namespace WebApplication3_Final_OrtFlix__Modelo_final_
 {
     public class Program
@@ -6,10 +9,13 @@ namespace WebApplication3_Final_OrtFlix__Modelo_final_
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddDbContext<OrtflixDatabaseContext>(options => options.UseSqlServer(builder.Configuration["ConnectionString:OrtflixDBConnection"]));
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
+
+            
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
