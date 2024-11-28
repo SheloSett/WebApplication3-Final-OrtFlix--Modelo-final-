@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApplication3_Final_OrtFlix__Modelo_final_.Context;
 
@@ -11,9 +12,10 @@ using WebApplication3_Final_OrtFlix__Modelo_final_.Context;
 namespace WebApplication3_Final_OrtFlix__Modelo_final_.Migrations
 {
     [DbContext(typeof(OrtflixDatabaseContext))]
-    partial class OrtflixDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20241128002833_contenidos-final")]
+    partial class contenidosfinal
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

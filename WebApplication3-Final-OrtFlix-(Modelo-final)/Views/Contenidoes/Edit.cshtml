@@ -1,0 +1,64 @@
+﻿@model WebApplication3_Final_OrtFlix__Modelo_final_.Models.Contenido
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Contenido</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Nombre" class="control-label"></label>
+                <input asp-for="Nombre" class="form-control" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Premium" /> @Html.DisplayNameFor(model => model.Premium)
+                </label>
+            </div>
+            <br />
+            <div class="form-group">
+                <select asp-for="TipoContenido" class="form-control" asp-items="Html.GetEnumSelectList<TipoContenido>()">
+                    <option selected="selected" value="">select TipoContenido</option>
+                </select>
+            </div>
+            <br />
+            <div class="form-group">
+                <select asp-for="Valoracion" class="form-control" asp-items="Html.GetEnumSelectList<Valoracion>()">
+                    <option selected="selected" value="">select Valoracion</option>
+                </select>
+            </div>
+            <br />
+            <div class="form-group">
+                <label asp-for="Duracion" class="control-label"></label>
+                <input asp-for="Duracion" class="form-control" />
+                <span asp-validation-for="Duracion" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <select asp-for="Clasificacion" class="form-control" asp-items="Html.GetEnumSelectList<Clasificacion>()">
+                    <option selected="selected" value="">select Clasificacion</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
