@@ -1,18 +1,67 @@
 html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: #141414;
 }
+
+.brand {
+    color: red;
+    font-weight: bold;
+}
+
+.nav-link:hover {
+    color: red !important;
+}
+
+.privacy {
+    color: white;
+}
+
+    .privacy h1 {
+        font-weight: bold;
+        margin: 2rem 0rem;
+    }
+
+    .privacy p {
+        margin-bottom: 3rem;
+    }
+
+    .privacy a {
+        color: red;
+        text-decoration: none;
+    }
+
+        .privacy a:hover {
+            text-decoration: underline;
+        }
+
+    .privacy li {
+        margin: 0.5rem 0rem;
+    }
+
+.wrapper {
+    border: 1px solid rgba(128, 128, 128, .4);
+    border-top-color: #e50914;
+    border-top-width: 4px;
+    border-radius: 4px;
+}
+
+.info {
+    padding: 1.5rem 1rem 1.5rem 1.5rem;
+}
+
+    .info h4 {
+        font-weight: bold;
+    }
+
+.pricing-header {
+    color: white;
+}
+
+    .pricing-header h1 {
+        font-weight: bold;
+    }
