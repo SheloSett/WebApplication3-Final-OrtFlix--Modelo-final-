@@ -4,7 +4,28 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<div class="container mt-4">
+    <h1 class="mb-4">Lista de Contenidos</h1>
+
+    <div class="row">
+        @foreach (var contenido in Model)
+        {
+            <div class="col-md-3 mb-4">
+                <div class="card bg-dark text-black" style="width: 18rem;">
+
+                    <div class="card-body bg-dark text-danger">
+                        <h5 class="card-title bg-dark ">@contenido.Nombre</h5>
+                        <p class="card-text bg-dark text-danger">
+                            Tipo: @contenido.TipoContenido<br />
+                            Duración: @contenido.Duracion minutos
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
 
 <p>
     <a asp-action="Create">Create New</a>
