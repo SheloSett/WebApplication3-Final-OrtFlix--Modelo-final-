@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using WebApplication3_Final_OrtFlix__Modelo_final_.Context;
 
@@ -15,8 +17,6 @@ namespace WebApplication3_Final_OrtFlix__Modelo_final_
 
             var app = builder.Build();
 
-            
-
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
@@ -29,7 +29,7 @@ namespace WebApplication3_Final_OrtFlix__Modelo_final_
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            
             app.UseAuthorization();
 
             app.MapControllerRoute(
