@@ -78,3 +78,47 @@ body {
     .pricing-header h1 {
         font-weight: bold;
     }
+
+.iniciar-sesion {
+    color: white;
+    padding-bottom:30px;
+}
+
+.login-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-content:center;
+    align-items: center;
+    text-align:center;
+}
+
+#button-sesion {
+    margin-top: 20px;
+    text-decoration: none;
+    color: red !important;
+    font-weight: bold;
+    font-size: 20px;
+    background-color: #141414;
+}
+#input-label{
+
+    color:white;
+}
+
+.label-password {
+    padding-right: 20px;
+}
+
+.label-email{
+    padding-right: 62px;
+}
+
+.email-container{
+    padding-bottom: 30px;
+}
+
+#email, #password{
+    border-radius: 14px;
+    padding: 3px;
+    font-weight: bold;
+}

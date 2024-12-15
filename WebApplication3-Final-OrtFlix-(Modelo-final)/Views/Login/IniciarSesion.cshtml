@@ -1,18 +1,16 @@
-﻿@{
-    Layout = null;
-}
+﻿
 
 <div class="login-container">
-    <h2>Iniciar Sesión</h2>
-    <form asp-action="Index" method="post">
-        <div>
-            <label for="email">Email</label>
+    <h2 class="iniciar-sesion">Iniciar Sesión</h2>
+    <form asp-controller="Contenidoes" asp-action="Index" method="post">
+        <div class="email-container">
+            <label for="email" id="input-label" class="label-email">Email</label>
             <input type="email" id="email" name="email" required />
         </div>
         <div>
-            <label for="password">Contraseña</label>
+            <label for="password" id="input-label" class="label-password">Contraseña</label>
             <input type="password" id="password" name="password" required />
         </div>
-        <button type="submit">Iniciar Sesión</button>
+        <button type="submit" id="button-sesion">Iniciar Sesión</button>
     </form>
 </div>
