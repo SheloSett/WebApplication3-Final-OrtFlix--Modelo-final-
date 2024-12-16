@@ -23,6 +23,7 @@ namespace WebApplication3_Final_OrtFlix__Modelo_final_.Controllers
             _context = context;
         }
 
+        [HttpPost]
         public IActionResult Registro()
         {
             return View();
@@ -44,6 +45,7 @@ namespace WebApplication3_Final_OrtFlix__Modelo_final_.Controllers
             return View();
         }
 
+        [HttpPost]
         public IActionResult IniciarSesion()
         {
             return View();

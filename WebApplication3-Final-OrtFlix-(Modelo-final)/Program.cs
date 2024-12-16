@@ -54,12 +54,12 @@ namespace WebApplication3_Final_OrtFlix__Modelo_final_
             app.UseStaticFiles();
 
             app.UseRouting();
-            
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Login}/{action=IniciarSesion}/{id?}");
 
             app.Run();
         }
