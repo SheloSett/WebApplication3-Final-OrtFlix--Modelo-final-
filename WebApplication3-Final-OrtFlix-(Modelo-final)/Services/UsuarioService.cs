@@ -1,13 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using WebApplication3_Final_OrtFlix__Modelo_final_.Context;
 using WebApplication3_Final_OrtFlix__Modelo_final_.Models;
 
 namespace WebApplication3_Final_OrtFlix__Modelo_final_.Services
 {
     public class UsuarioService : IUsuarioService
     {
-        private readonly UsuarioContext _context;
+        private readonly OrtflixDatabaseContext _context;
 
-        public UsuarioService(UsuarioContext context)
+        public UsuarioService(OrtflixDatabaseContext context)
         {
             _context = context;
         }

@@ -18,10 +18,7 @@ namespace WebApplication3_Final_OrtFlix__Modelo_final_
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-            builder.Services.AddDbContext<UsuarioContext>(options =>
-            {
-                options.UseSqlServer(builder.Configuration.GetConnectionString("OrtflixDBConnection"));
-            });
+            builder.Services.AddDbContext<OrtflixDatabaseContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("OrtflixDBConnection")));
             builder.Services.AddScoped<IUsuarioService, UsuarioService>();
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>

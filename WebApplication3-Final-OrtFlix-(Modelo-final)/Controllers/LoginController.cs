@@ -3,6 +3,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using WebApplication3_Final_OrtFlix__Modelo_final_.Context;
 using WebApplication3_Final_OrtFlix__Modelo_final_.Models;
 using WebApplication3_Final_OrtFlix__Modelo_final_.Services;
 
@@ -13,11 +14,11 @@ namespace WebApplication3_Final_OrtFlix__Modelo_final_.Controllers
     {
 
         private readonly IUsuarioService _usuarioService;
-        private readonly UsuarioContext _context;
+        private readonly OrtflixDatabaseContext _context;
 
         public bool AllowRefresh { get; private set; }
 
-        public LoginController(IUsuarioService usuarioService, UsuarioContext context)
+        public LoginController(IUsuarioService usuarioService, OrtflixDatabaseContext context)
         {
             _usuarioService = usuarioService;
             _context = context;
@@ -32,7 +33,7 @@ namespace WebApplication3_Final_OrtFlix__Modelo_final_.Controllers
         [HttpPost]
         public async Task<IActionResult> Registro(Usuario usuario)
         {
-            usuario.Password = Utilidades.EncriptarClave(usuario.Password);
+            usuario.Password = usuario.Password;
 
             Usuario usuarioCreado = await _usuarioService.SaveUsuario(usuario);
 
@@ -53,7 +54,8 @@ namespace WebApplication3_Final_OrtFlix__Modelo_final_.Controllers
 
         public async Task<IActionResult> IniciarSesion(string email, string password)
         {
-            Usuario usuarioEncontrado = await _usuarioService.GetUsuario(email, Utilidades.EncriptarClave(password));
+            
+            Usuario usuarioEncontrado = await _usuarioService.GetUsuario(email, password);
 
             if (usuarioEncontrado == null)
             {
