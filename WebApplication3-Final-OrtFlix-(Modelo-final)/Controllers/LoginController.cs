@@ -1,74 +1,82 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using WebApplication3_Final_OrtFlix__Modelo_final_.Context;
-using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
+﻿using System.Drawing.Text;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
+using WebApplication3_Final_OrtFlix__Modelo_final_.Models;
+using WebApplication3_Final_OrtFlix__Modelo_final_.Services;
 
 namespace WebApplication3_Final_OrtFlix__Modelo_final_.Controllers
 {
+
     public class LoginController : Controller
     {
-        private readonly OrtflixDatabaseContext _context;
-        
-        public LoginController(OrtflixDatabaseContext context)
+
+        private readonly IUsuarioService _usuarioService;
+        private readonly UsuarioContext _context;
+
+        public bool AllowRefresh { get; private set; }
+
+        public LoginController(IUsuarioService usuarioService, UsuarioContext context)
         {
+            _usuarioService = usuarioService;
             _context = context;
         }
-       
-        public IActionResult IniciarSesion()
+
+        public IActionResult Registro()
         {
             return View();
         }
 
         [HttpPost]
+        public async Task<IActionResult> Registro(Usuario usuario)
+        {
+            usuario.Password = Utilidades.EncriptarClave(usuario.Password);
+
+            Usuario usuarioCreado = await _usuarioService.SaveUsuario(usuario);
+
+            if (usuarioCreado.Id > 0)
+            {
+                return RedirectToAction("IniciarSesion", "Login");
+            }
+
+            ViewData["Mensaje"] = "No se pudo crear el usuario";
+            return View();
+        }
+
+        public IActionResult IniciarSesion()
+        {
+            return View();
+        }
+
         public async Task<IActionResult> IniciarSesion(string email, string password)
         {
-            if(string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+            Usuario usuarioEncontrado = await _usuarioService.GetUsuario(email, Utilidades.EncriptarClave(password));
+
+            if (usuarioEncontrado == null)
             {
-                ModelState.AddModelError("", "El email y la contraseña son obligatorios");
+                ViewData["Mensaje"] = "Usuario no encontrado";
                 return View();
             }
 
-            var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == email);
-
-            if(usuario == null)
+            List<Claim> claims = new List<Claim>()
             {
-                ModelState.AddModelError("", "El email no existe");
-                return View();
-            }
-
-            if(usuario.Password != password)
-            {
-                ModelState.AddModelError("", "La contraseña es incorrecta");
-                return View();
-            }
-
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Email, usuario.Email),
-                new Claim(ClaimTypes.Name, usuario.NombreCompleto),
-                new Claim("UserId", usuario.Id.ToString()),
-                new Claim("EsAdmin", usuario.EsAdmin.ToString()),
-                new Claim("Premium", usuario.Premium.ToString())
+                new Claim(ClaimTypes.Name, usuarioEncontrado.NombreCompleto),
             };
 
-            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-            var authProperties = new AuthenticationProperties
+            ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            AuthenticationProperties properties = new AuthenticationProperties();
             {
-                IsPersistent = true
+                AllowRefresh = true;
             };
 
             await HttpContext.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 new ClaimsPrincipal(claimsIdentity),
-                authProperties);
+                properties
+                );
 
             return RedirectToAction("Index", "Home");
-
         }
-        
     }
 }

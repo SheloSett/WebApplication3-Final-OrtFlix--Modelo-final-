@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApplication3_Final_OrtFlix__Modelo_final_.Context;
+using WebApplication3_Final_OrtFlix__Modelo_final_.Models;
+using WebApplication3_Final_OrtFlix__Modelo_final_.Services;
 
 namespace WebApplication3_Final_OrtFlix__Modelo_final_
 {
@@ -14,6 +17,28 @@ namespace WebApplication3_Final_OrtFlix__Modelo_final_
             builder.Services.AddDbContext<OrtflixDatabaseContext>(options => options.UseSqlServer(builder.Configuration["ConnectionString:OrtflixDBConnection"]));
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddDbContext<UsuarioContext>(o =>
+            {
+                o.UseSqlServer(builder.Configuration.GetConnectionString("OrtflixDBConnection"));
+            });
+            builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/Login/IniciarSesion";
+                    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                });
+            builder.Services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add(
+                    new ResponseCacheAttribute
+                    {
+                        NoStore = true,
+                        Location = ResponseCacheLocation.None,
+                    }
+                    );
+            });
 
             var app = builder.Build();
 

@@ -1,0 +1,93 @@
+﻿@model WebApplication3_Final_OrtFlix__Modelo_final_.Models.Usuario
+@{
+    Layout = null;
+}
+
+<h1>Registro</h1>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Registrarse</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+<body>
+
+
+    <div class="container mt-5 pt-5">
+
+        <div class="row justify-content-center">
+            <div class="col-12 col-xl-4 col-md-6">
+
+                <div class="card">
+                    <div class="card-header">
+                        Registrate
+                    </div>
+                    <div class="card-body">
+
+                        <form asp-controller="Login" asp-action="Registro" method="post" enctype="multipart/form-data">
+
+                            <input class="form-control mb-3" type="text" placeholder="Nombre Completo" asp-for="NombreCompleto" required />
+                            <input class="form-control mb-3" type="text" placeholder="Correo" required asp-for="Email" />
+                            <input class="form-control mb-3" type="password" placeholder="Contraseña" required asp-for="Password" />
+                           
+                            <div class="mb-3">
+                                <label class="form-label">¿Es administrador?</label>
+                                <div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" asp-for="EsAdmin" value="true" id="EsAdminSi" />
+                                        <label class="form-check-label" for="EsAdminSi">Sí</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" asp-for="EsAdmin" value="false" id="EsAdminNo" />
+                                        <label class="form-check-label" for="EsAdminNo">No</label>
+                                    </div>
+                                </div>
+                                <span class="text-danger" asp-validation-for="EsAdmin"></span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">¿Es premium?</label>
+                                <div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" asp-for="Premium" value="true" id="PremiumnSi" />
+                                        <label class="form-check-label" for="PremiumSi">Sí</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" asp-for="Premium" value="false" id="PremiumNo" />
+                                        <label class="form-check-label" for="PremiumNo">No</label>
+                                    </div>
+                                </div>
+                                <span class="text-danger" asp-validation-for="Premium"></span>
+                            </div>
+
+                            <div class="d-grid gap-2 mb-3">
+                                <button class="btn btn-primary" type="submit">Registrate</button>
+                            </div>
+                            @if (ViewData["Mensaje"] != null)
+                            {
+
+                                <div class="form-group">
+                                    <div class="alert alert-danger" role="alert">
+                                        @ViewData["Mensaje"]
+                                    </div>
+                                </div>
+                            }
+                            ¿Ya tienes una cuenta? <a href="@Url.Action("IniciarSesion","Login")"> Iniciar Sesion</a>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

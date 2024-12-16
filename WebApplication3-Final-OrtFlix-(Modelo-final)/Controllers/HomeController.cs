@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WebApplication3_Final_OrtFlix__Modelo_final_.Models;
+using System.Security.Claims;
 
 namespace WebApplication3_Final_OrtFlix__Modelo_final_.Controllers
 {
@@ -17,6 +18,17 @@ namespace WebApplication3_Final_OrtFlix__Modelo_final_.Controllers
 
         public IActionResult Index()
         {
+            ClaimsPrincipal claimsUser = HttpContext.User;
+            string nombreUsuario = "";
+
+            if (claimsUser.Identity.IsAuthenticated)
+            {
+                nombreUsuario = claimsUser.Claims.Where(c => c.Type == ClaimTypes.Name)
+                    .Select(c => c.Value).SingleOrDefault();
+            }
+
+            ViewData["nombreUsuario"] = nombreUsuario;
+
             return View();
         }
 
@@ -35,11 +47,11 @@ namespace WebApplication3_Final_OrtFlix__Modelo_final_.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Logout()
+           public async Task<IActionResult> CerrarSesion()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Index");
+            return RedirectToAction("Iniciar Sesion", "Login");
         }
+    
     }
 }
